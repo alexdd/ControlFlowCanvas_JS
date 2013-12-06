@@ -11,4 +11,4 @@ Prerequisites
 License
 -------
 
-SLOTMACHINE_PY is licensed under the GNU General Public License, see file license.txt.
+ControlFlowCanvas_JS is licensed under the GNU General Public License, see file license.txt.
