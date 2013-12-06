@@ -1,0 +1,314 @@
+<html>
+    
+    <!--
+        
+#     index.html part of ControlFlowCanvas_JS
+#
+#     Copyright (C) 2007  by Alex Duesel <alex@alex-duesel.de>
+#     homepage: http://www.mandarine.tv
+#     See file license.txt for licensing issues
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Lesser General Public License as published by
+#    the Free Software Foundation, either version 3 of the License.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+    -->
+    
+    
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+       <link type="text/css" rel="StyleSheet" href="css/devel.css" />
+        <!--[if gte IE 6]><script type="text/javascript" src="script/excanvas.js"></script><![endif]-->        
+        <script src="script/Point.js" type="text/javascript"></script>
+        <script src="script/Line.js" type="text/javascript"></script>
+        <script src="script/Polygon.js" type="text/javascript"></script>
+        <script src="script/BezierCurve.js" type="text/javascript"></script>
+        <script src="script/ArrowHead.js" type="text/javascript"></script>
+        <script src="script/Node.js" type="text/javascript"></script>
+        <script src="script/Graph.js" type="text/javascript"></script>
+        <script src="script/FormField.js" type="text/javascript"></script>
+        <script src="script/Devel.js" type="text/javascript"></script>
+        <script type="text/javascript" src="script/range.js"></script>
+        <script type="text/javascript" src="script/timer.js"></script>
+        <script type="text/javascript">
+	<!--
+	var devel;
+	
+	function draw() {
+		var canvas = document.getElementById("canvas");
+		if (!canvas.getContext) return;
+		var ctx = canvas.getContext('2d');
+		devel = new Devel(ctx);
+		devel.update();
+	}
+	
+	function redraw() {
+		if(!devel) return;
+		devel.update();
+	}
+	-->
+	</script>
+	<script type="text/javascript" src="script/slider.js"></script>
+  </head>
+    <body onload="draw();">
+<h1>Control flow graph</h1>
+<p>Change successors of nodes and edit input fields. Also drag sliders and investigate graph :-]</p>
+<table width="890" border="0" cellpadding="10" cellspacing="10" height="1050" class="editor">
+  <tr> 
+    <td height="72" width="72"></td>
+    <td  rowspan="25" valign="top" width="95"> <canvas height="1010" width="340" id="canvas"></canvas> 
+    </td>
+    <td  height="72" width="229"> 
+      <div align="center"> 
+        <h3 align="left">Successor:</h3>
+      </div>
+    </td>
+    <td  height="1062" rowspan="13" valign="top" width="234"> <br />
+      <br />
+      <hr />
+      Node distance and radius: 
+      <hr />
+      <p>DISTANCE: <span id="DISTANCE_DISPLAY"></span> </p>
+      <div class="slider" id="slider-1" tabIndex="1"> 
+        <input class="slider-input" id="DISTANCE" >
+      </div>
+      <script type="text/javascript">
+var s = new Slider(document.getElementById("slider-1"),
+                   document.getElementById("DISTANCE"));
+		   s.setMaximum(160);
+		   s.setMinimum(40);
+		   s.setValue(80);
+
+</script>
+      <p>NODE RADIUS: <span id="RADIUS_DISPLAY"></span> </p>
+      <div class="slider" id="slider-2" tabIndex="1"> 
+        <input class="slider-input" id="RADIUS" >
+      </div>
+      <script type="text/javascript">
+var s1 = new Slider(document.getElementById("slider-2"),
+                   document.getElementById("RADIUS"));
+		   s1.setMaximum(60);
+		   s1.setMinimum(20);
+
+</script>
+      <br />
+      <br />
+      <hr />
+      Graph (average case): 
+      <hr />
+      <p>CONTROL 2 X: <span id="CONTROL2X_DISPLAY"></span> </p>
+      <div class="slider" id="slider-3" tabIndex="1"> 
+        <input class="slider-input" id="CONTROL2X" >
+      </div>
+      <script type="text/javascript">
+var s2 = new Slider(document.getElementById("slider-3"),
+                   document.getElementById("CONTROL2X"));
+		   s2.setMaximum(50);
+		   s2.setMinimum(-50);
+		   s2.setValue(12);
+
+</script>
+      <p>CONTROL 2 Y: <span id="CONTROL2Y_DISPLAY"></span> </p>
+      <div class="slider" id="slider-4" tabIndex="1"> 
+        <input class="slider-input" id="CONTROL2Y" >
+      </div>
+      <script type="text/javascript">
+var s3 = new Slider(document.getElementById("slider-4"),
+                   document.getElementById("CONTROL2Y"));
+		   s3.setMaximum(50);
+		   s3.setMinimum(-50);
+		   s3.setValue(18);
+
+</script>
+      <p>CONTROL 1 X: <span id="CONTROL1X_DISPLAY"></span> </p>
+      <div class="slider" id="slider-5" tabIndex="1"> 
+        <input class="slider-input" id="CONTROL1X" >
+      </div>
+      <script type="text/javascript">
+var s4 = new Slider(document.getElementById("slider-5"),
+                   document.getElementById("CONTROL1X"));
+		   s4.setMaximum(50);
+		   s4.setMinimum(-50);
+		   s4.setValue(6);
+
+</script>
+      <p>CONTROL 1 Y: <span id="CONTROL1Y_DISPLAY"></span> </p>
+      <div class="slider" id="slider-6" tabIndex="1"> 
+        <input class="slider-input" id="CONTROL1Y" >
+      </div>
+      <script type="text/javascript">
+var s5 = new Slider(document.getElementById("slider-6"),
+                   document.getElementById("CONTROL1Y"));
+		   s5.setMaximum(50);
+		   s5.setMinimum(-50);
+		   s5.setValue(-2);
+
+</script>
+      <br />
+      <br />
+      <hr />
+      Adjustment of arrow heads: 
+      <hr />
+      <p>ARROW HEAD ADJUST: <span id="ARROWHEAD_DISPLAY"></span> </p>
+      <div class="slider" id="slider-11" tabIndex="1"> 
+        <input class="slider-input" id="ARROWHEAD" >
+      </div>
+      <script type="text/javascript">
+var s10 = new Slider(document.getElementById("slider-11"),
+                   document.getElementById("ARROWHEAD"));
+		   s10.setMaximum(50);
+		   s10.setMinimum(-50);
+		   s10.setValue(27);
+
+</script>
+    </td>
+    <td  height="1062" rowspan="13" valign="top" width="260"><br>
+      <br />
+      <hr />
+      Graph (special case: direction upwards and immediate neighbour): 
+      <hr />
+<p>CONTROL 2 X: <span id="CONTROL2XDIRECT_DISPLAY"></span> </p>
+      <div class="slider" id="slider-9" tabindex="1"> 
+        <input class="slider-input" id="CONTROL2XDIRECT" name="Input" >
+      </div>
+      <script type="text/javascript">
+var s8 = new Slider(document.getElementById("slider-9"),
+                   document.getElementById("CONTROL2XDIRECT"));
+		   s8.setMaximum(50);
+		   s8.setMinimum(-50);
+		   s8.setValue(6);
+</script>
+      <p>CONTROL 2 Y: <span id="CONTROL2YDIRECT_DISPLAY"></span> </p>
+      <div class="slider" id="slider-10" tabindex="1"> 
+        <input class="slider-input" id="CONTROL2YDIRECT" name="Input" >
+      </div>
+      <script type="text/javascript">
+var s9 = new Slider(document.getElementById("slider-10"),
+                   document.getElementById("CONTROL2YDIRECT"));
+		   s9.setMaximum(50);
+		   s9.setMinimum(-50);
+   		   s9.setValue(2);
+
+
+</script>
+      <p>CONTROL 1 X: <span id="CONTROL1XDIRECT_DISPLAY"></span> </p>
+      <div class="slider" id="slider-7" tabindex="1"> 
+        <input class="slider-input" id="CONTROL1XDIRECT" name="Input" >
+      </div>
+      <script type="text/javascript">
+var s6 = new Slider(document.getElementById("slider-7"),
+                   document.getElementById("CONTROL1XDIRECT"));
+		   s6.setMaximum(50);
+		   s6.setMinimum(-50);
+		   s6.setValue(11);
+
+</script>
+      <p>CONTROL 1 Y: <span id="CONTROL1YDIRECT_DISPLAY"></span> </p>
+      <div class="slider" id="slider-8" tabindex="1"> 
+        <input class="slider-input" id="CONTROL1YDIRECT" name="Input" >
+      </div>
+      <script type="text/javascript">
+var s7 = new Slider(document.getElementById("slider-8"),
+                   document.getElementById("CONTROL1YDIRECT"));
+		   s7.setMaximum(50);
+		   s7.setMinimum(-50);
+		   s7.setValue(0);
+
+</script>
+      <br />
+      <br />
+      <hr />
+      Turn layout algorithm on and off:
+      <br />
+      <br />
+      On:
+      <input type="checkbox" id="LAYOUT" onchange="redraw();" checked >
+      <br /><br />
+      If turned of all edges will have the same distance to the nodes. Except for special cases...
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">1.</td>
+    <td valign="top"  height="80" id="cell0" width="229"> 
+      <input class="geditor" type="text" name="FeldA2" maxlength="12" size="12" id="node0" onkeyup="redraw();" value="12">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">2.</td>
+    <td valign="top"  height="80" id="cell1" width="229"> 
+      <input class="geditor" type="text" name="FeldA6" size="12" maxlength="12" id="node1" onkeyup="redraw();" value="3,7">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">3.</td>
+    <td valign="top"  height="80" id="cell2" width="229"> 
+      <input class="geditor" type="text" name="FeldA10" size="12" maxlength="12" id="node2" onkeyup="redraw();" value="4,6">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">4.</td>
+    <td valign="top"  height="80" id="cell3" width="229"> 
+      <input class="geditor" type="text" name="FeldA14" size="12" maxlength="12" id="node3" onkeyup="redraw();" value="4,5">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">5.</td>
+    <td valign="top"  height="80" id="cell4" width="229"> 
+      <input class="geditor" type="text" name="FeldA18" size="12" maxlength="12" id="node4" onkeyup="redraw();" value="6,8">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">6.</td>
+    <td valign="top"  height="80" id="cell5" width="229"> 
+      <input class="geditor" type="text" name="FeldA22" size="12" maxlength="12" id="node5" onkeyup="redraw();" value="9">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">7.</td>
+    <td valign="top"  height="80" id="cell6" width="229"> 
+      <input class="geditor" type="text" name="FeldA26" size="12" maxlength="12" id="node6" onkeyup="redraw();" value="6,8">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">8.</td>
+    <td valign="top"  height="80" id="cell7" width="229"> 
+      <input class="geditor" type="text" name="FeldA30" size="12" maxlength="12" id="node7" onkeyup="redraw();" value="10">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">9.</td>
+    <td valign="top"  height="80" id="cell8" width="229"> 
+      <input class="geditor" type="text" name="FeldA34" size="12" maxlength="12" id="node8" onkeyup="redraw();" value="4,11">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">10.</td>
+    <td valign="top"  height="80" id="cell9" width="229"> 
+      <input class="geditor" type="text" name="FeldA38" size="12" maxlength="12" id="node9" onkeyup="redraw();" value="3">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">11.</td>
+    <td valign="top"  height="80" id="cell10" width="229"> 
+      <input class="geditor" type="text" name="FeldA42" size="12" maxlength="12" id="node10" onkeyup="redraw();" value="2">
+    </td>
+  </tr>
+  <tr> 
+    <td height="80"  valign="top" width="72">12.</td>
+    <td valign="top"  height="110" id="cell11" width="229"> 
+      <input class="geditor" type="text" name="FeldA46" size="12" maxlength="12" id="node11" onkeyup="redraw();" value="1">
+    </td>
+  </tr>
+</table>
+    </body>
+</html>
