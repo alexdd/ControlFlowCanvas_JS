@@ -12,3 +12,8 @@ License
 -------
 
 ControlFlowCanvas_JS is licensed under the GNU General Public License, see file license.txt.
+
+Test
+----
+
+You can test it here: http://www.alex-duesel.de/bachelor/Implementierung/devel.html
